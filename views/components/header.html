@@ -1,0 +1,32 @@
+<header id="header">
+	<a href="/" id="logo">
+		💣 Boomkart
+	</a>
+	<form id="search" method="get" action="/search">
+		<input type="text" {% if q %}value="{{q}}"{% endif %} name="q" id="search-input" placeholder="Search for products">
+		<button type="submit" id="search-submit"><i class="material-icon">search</i></button>
+	</form>
+	{% if loggedIn %}
+	<a class="header-action" href="/orders">
+		<i class="material-icon">inventory_2</i> Orders
+	</a>
+	<a class="header-action" href="/cart">
+		<i class="material-icon">shopping_cart</i> Cart
+	</a>
+	<a class="header-action" href="/logout">
+		<i class="material-icon">logout</i> Log Out
+	</a>
+	{% else %}
+	<a class="header-action" href="/login">
+		<i class="material-icon">login</i> Login
+	</a>
+	<a class="header-action" href="/signup">
+		<i class="material-icon">person_add</i> Sign Up
+	</a>
+	{% endif %}
+</header>
+<div id="categories">
+	<a href="/Mobiles" class="category-link">Mobiles</a>
+	<a href="/Tablets" class="category-link">Tablets</a>
+	<a href="/Laptops" class="category-link">Laptops</a>
+</div>

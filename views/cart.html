@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=1000px" />
+	<title>Your Cart</title>
+	<link rel="stylesheet" href="/static/style.css">
+	<link rel="stylesheet" href="/static/header.css">
+	<link rel="stylesheet" href="/static/icons.css">
+	<link rel="stylesheet" href="/static/component/product.css">
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💣</text></svg>">
+	<style>
+		body {
+			background-color: #eeeeee;
+		}
+		#main {
+			display: flex;
+			flex-direction: column;
+			flex-wrap: nowrap;
+			align-items: flex-start;
+			justify-content: flex-start;
+			max-width: 800px;
+			margin: 10px auto;
+			padding: 10px;
+		}
+		#category-title {
+			display: block;
+			width: 100%;
+			padding: 20px;
+			border-radius: 5px;
+			margin-bottom: 10px;
+			background-color: #fff;
+		}
+		#buy-form {
+			width: 100%;
+			text-align: center;
+		}
+		#buy-now {
+			font-size: 2em;
+			color: #fff;
+			text-transform: uppercase;
+			margin: 20px auto;
+			padding: 10px 20px;
+			background-color: red;
+			border: none;
+			border-radius: 5px;
+			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
+			cursor: pointer;
+			transition: box-shadow 0.5s;
+		}
+		#buy-now:hover {
+			box-shadow: 0 2px 4px 2px rgba(0, 0, 0, 0.3);
+		}
+	</style>
+</head>
+<body>
+	{% include "./components/header.html" %}
+	<main id="main">
+		<h1 id="category-title">Your Cart</h1>
+		{% for product in products %}
+
+		<div class="product-card" href="/product/{{product.id}}" target="_blank">
+			<div class="product-card-img">
+				<img src="{{product.img}}" alt="{{product.name}}">
+			</div>
+			<div class="product-card-details">
+				<div class="product-name-price">
+					<h1 class="product-title">{{product.name}}</h1>
+					<div class="product-offvalue">Extra ₹{{product.mrp - product.price}} off</div>
+					<span class="product-price">₹{{product.price}}</span>
+					<s class="product-mrp">₹{{product.mrp}}</s>
+					<span class="product-off-percent">{{((product.mrp - product.price)*100)//product.mrp}}% off</span>	
+				</div>
+		
+				<a href="/product/{{product.id}}" class="product-card-button">
+					<i class="material-icon">info</i> View Details
+				</a>
+				<button href="" class="product-card-button remove-from-cart" data-pid="{{product.id}}">
+					<i class="material-icon">delete</i> Remove
+				</button>
+			</div>
+		</div>
+		
+		{% endfor %}
+		<form id="buy-form" action="/buy" method="post">
+			<input type="text" value="buy" style="display: none;">
+			<button type="submit" id="buy-now">
+				<i class="material-icon">bolt</i> Buy Now
+			</button>
+		</form>
+		
+	</main>
+	{% include "./components/footer.html" %}
+
+	<script defer>
+		document.querySelectorAll(".remove-from-cart")?.forEach(el => {
+			el.addEventListener("click", function() {
+				console.log("yoyoy")
+				fetch("/removefromcart", {
+					credentials:"include",
+					body: JSON.stringify({pid:this.dataset.pid}),
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}).then(res => res.json()).then(res => {
+					if(!res.loggedIn) {
+						alert("Please Login to to modify your cart!")
+						return
+					}
+					location.reload()
+				})
+			})
+		})
+	</script>
+</body>
+</html>

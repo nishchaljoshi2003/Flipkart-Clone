@@ -1,0 +1,99 @@
+{
+  "users": [
+    {
+      "email": "madhur@gmail.com",
+      "pass": "123abc",
+      "cart": [],
+      "orders": []
+    },
+    {
+      "email": "mar@gmail.com",
+      "pass": "asdfgh",
+      "cart": [],
+      "orders": [
+        {
+          "date": 1658867157308,
+          "products": [
+            1,
+            14
+          ]
+        },
+        {
+          "date": 1658869373850,
+          "products": [
+            8
+          ]
+        },
+        {
+          "date": 1658869646361,
+          "products": [
+            21
+          ]
+        },
+        {
+          "date": 1658897622057,
+          "products": [
+            22
+          ]
+        },
+        {
+          "date": 1658899952405,
+          "products": [
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "email": "nishchaljoshi2003@gmail.com",
+      "pass": "nishchaljoshi66",
+      "cart": [],
+      "orders": [
+        {
+          "date": 1658897752269,
+          "products": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "email": "abc@abc.com",
+      "pass": "qwerty",
+      "cart": [],
+      "orders": [
+        {
+          "date": 1658903836221,
+          "products": [
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "email": "joshi.abhinav17@gmail.com",
+      "pass": "12345678",
+      "cart": [],
+      "orders": [
+        {
+          "date": 1659178509148,
+          "products": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "email": "nishchaljoshi2003@gmail.com",
+      "pass": "nishchaljoshi66",
+      "cart": [],
+      "orders": []
+    },
+    {
+      "email": "nishchaljoshi2003@gmail.com",
+      "pass": "12345",
+      "cart": [],
+      "orders": []
+    }
+  ]
+}

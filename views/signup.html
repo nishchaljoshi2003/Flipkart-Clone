@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=1000px" />
+		<title>Sign Up to Flipkart</title>
+		<link rel="stylesheet" href="/static/style.css" />
+		<link rel="stylesheet" href="/static/header.css" />
+		<link rel="stylesheet" href="/static/icons.css" />
+		<link rel="stylesheet" href="/static/form.css" />
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💣</text></svg>">
+	</head>
+	<body>
+		{% include "./components/header.html" %}
+		<form id="login-form" method="post" action="/signup" enctype="application/json">
+			<h1>Sign Up</h1>
+			{% if invalid %}
+			<span class="red">Please enter correct credentials</span>
+			{% endif %}
+			<label for="form-email">Enter Email</label>
+			<input type="email" name="email" id="form-email" />
+			<label for="form-password">Enter Password</label>
+			<input type="password" name="password" id="form-password" />
+			By continuing, you agree to Boomkart's Terms of Use and Privacy
+			Policy.
+			<button type="submit" id="form-submit-button" class="form-button">
+				Sign Up
+			</button>
+			<a href="/login" id="new-account-link">
+				Already a user? Log In
+			</a>
+		</form>
+		{% include "./components/footer.html" %}
+	</body>
+</html>

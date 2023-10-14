@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=1000px" />
+	<title>{{title}}</title>
+	<link rel="stylesheet" href="/static/style.css">
+	<link rel="stylesheet" href="/static/header.css">
+	<link rel="stylesheet" href="/static/icons.css">
+	<link rel="stylesheet" href="/static/component/product.css">
+	<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💣</text></svg>">
+	<style>
+		body {
+			background-color: #eeeeee;
+		}
+		#main {
+			display: flex;
+			flex-direction: column;
+			flex-wrap: nowrap;
+			align-items: flex-start;
+			justify-content: flex-start;
+			max-width: 800px;
+			margin: 10px auto;
+			padding: 10px;
+		}
+		#category-title {
+			display: block;
+			width: 100%;
+			padding: 20px;
+			border-radius: 5px;
+			margin-bottom: 10px;
+			background-color: #fff;
+		}
+		#sort {
+			width: 100%;
+			padding: 20px;
+			border-radius: 5px;
+			margin-bottom: 10px;
+			background-color: #fff;
+		}
+		#sort label {
+			font-size: 1.3em;
+		}
+		#product-sort {
+			background-color: #fff;
+			border: 1px solid #777;
+			border-radius: 5px;
+			padding: 5px 10px;
+			font-size: 1.1em;
+			margin-left: 5px;
+		}
+		#apply-sort {
+			text-decoration: none;
+			color: white;
+			background-color: #4169ef;
+			padding: 5px 20px;
+			font-size: 1.2em;
+			margin-left: 10px;
+			border-radius: 5px;
+		}
+	</style>
+</head>
+<body>
+	{% include "./components/header.html" %}
+	<main id="main">
+		<h1 id="category-title">Buy {{title}}</h1>
+		<div id="sort">
+			<label for="product-sort">Sort By: </label>
+			<select name="product-sort" id="product-sort">
+				{% for sorttype in sorting %}
+				<option value="{{sorttype.val}}" {% if sorttype.selected %}selected{% endif %}>{{sorttype.name}}</option>
+				{% endfor %}
+			</select>
+			<a href="" id="apply-sort">Apply</a>
+		</div>
+		{% for product in products %}
+
+		{% include "./components/product.html" %}
+		
+		{% endfor %}
+	</main>
+	{% include "./components/footer.html" %}
+
+	<script>
+		document.getElementById("product-sort").addEventListener("change", function() {
+			document.getElementById("apply-sort").setAttribute("href", location.pathname + "?sort=" + this.value)
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+#login-form {
+	max-width: 500px;
+	margin: 20px auto;
+	border: 1px solid #aaaaaa;
+	border-radius: 5px;
+	padding: 20px;
+}
+
+#login-form label {
+	font-size: 0.9em;
+	margin-top: 20px;
+	display: block;
+	font-weight: 500;
+}
+
+#form-email, #form-password {
+	display: block;
+	width: 100%;
+	font-size: 1.3em;
+	padding: 5px;
+}
+
+.form-button {
+	width: 100%;
+	margin: 10px auto;
+	background-color: orange;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: 2em;
+	margin: 10px auto;
+	padding: 10px;
+	box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.3);
+}
+
+.red {
+	color: red;
+	font-weight: 500;
+	margin-bottom: 10px;
+}
+
+#new-account-link {
+	text-decoration: none;
+	color: #4169e3;
+	font-weight: 500;
+}

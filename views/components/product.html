@@ -1,0 +1,20 @@
+<a class="product-card" href="/product/{{product.id}}" target="_blank">
+	<div class="product-card-img">
+		<img src="{{product.img}}" alt="{{product.name}}">
+	</div>
+	<div class="product-card-details">
+		<div class="product-name-price">
+			<h1 class="product-title">{{product.name}}</h1>
+			<div class="product-offvalue">Extra ₹{{product.mrp - product.price}} off</div>
+			<span class="product-price">₹{{product.price}}</span>
+			<s class="product-mrp">₹{{product.mrp}}</s>
+			<span class="product-off-percent">{{((product.mrp - product.price)*100)//product.mrp}}% off</span>	
+		</div>
+
+		<ul class="product-highlights">
+			{% for highlight in product.highlights %}
+				<li>{{highlight}}</li>
+			{% endfor %}
+		</ul>
+	</div>
+</a>

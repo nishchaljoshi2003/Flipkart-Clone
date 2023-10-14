@@ -1,0 +1,31 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#main {
+	min-height: 60vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 500;
+}
+
+.breadcrumbs {
+	color: rgb(150, 150, 150);
+}
+
+.breadcrumb {
+	margin: 0 4px;
+	text-decoration: none;
+}
+
+a.breadcrumb:hover {
+	color: #4169e3;
+}
+
+.breadcrumb:first-child {
+	margin-left: 0;
+}

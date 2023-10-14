@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=1000px" />
+		<title>Buy {{product.name}}</title>
+		<link rel="stylesheet" href="/static/style.css" />
+		<link rel="stylesheet" href="/static/header.css" />
+		<link rel="stylesheet" href="/static/icons.css" />
+		<link rel="stylesheet" href="/static/product.css" />
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💣</text></svg>">
+	</head>
+	<body>
+		{% include "./components/header.html" %}
+		<main id="main">
+			<div id="left">
+				<div id="product-image-container">
+					<img src="{{product.img}}" alt="{{product.name}}" />
+				</div>
+				<div class="action-buttons">
+					{% if inCart %}
+					<a class="add-to-cart" href="/cart"">
+						<i class="material-icon">shopping_cart</i>
+						Go to Cart
+					</a>
+					{% else %}
+					<button id="add-to-cart" class="add-to-cart" data-pid="{{product.id}}">
+						<i class="material-icon">shopping_cart</i>
+						Add to Cart
+					</button>
+					{% endif %}
+					<button id="buy-button" class="buy-button" data-pid="{{product.id}}">
+						<i class="material-icon">bolt</i>
+						Buy Now
+					</button>
+				</div>
+			</div>
+			<div id="right">
+				<div id="product-main-info">
+					<div class="breadcrumbs">
+						<a class="breadcrumb" href="/">Home</a>
+						>
+						<a class="breadcrumb" href="/{{product.category}}">{{product.category}}</a>
+						>
+						<a class="breadcrumb" href="/search?q={{product.brand}}">{{product.brand}}</a>
+						>
+						<span class="breadcrumb">{{product.name}}</span>
+					</div>
+					<h1 class="product-title">{{product.name}}</h1>
+					<div class="product-offvalue">Extra ₹{{product.mrp - product.price}} off</div>
+					<span class="product-price">₹{{product.price}}</span>
+					<s class="product-mrp">₹{{product.mrp}}</s>
+					<span class="product-off-percent">{{((product.mrp - product.price)*100)//product.mrp}}% off</span>
+					<div class="product-offers">
+						<h4 class="product-offer-heading">Available Offers</h4>
+						<div class="product-offer">
+							<i class="material-icon">sell</i>
+							<b>Bank Offer</b> 10% off on Axis Bank Credit Cards,
+							up to ₹750. On orders of ₹3000 and above
+						</div>
+						<div class="product-offer">
+							<i class="material-icon">sell</i>
+							<b>Bank Offer</b> 5% off on Flipkart Axis Bank Co
+							Brand Card, up to ₹375. On orders of ₹3000 and above
+						</div>
+						<div class="product-offer">
+							<i class="material-icon">sell</i>
+							<b>Bank Offer</b> 10% off on Kotak Bank Credit
+							Cards, up to ₹1,000. On orders of ₹3,000 and above
+						</div>
+						<div class="product-offer">
+							<i class="material-icon">sell</i>
+							<b>Special Price</b> Extra ₹{{product.mrp - product.price}} off(price
+							inclusive of discount)
+						</div>
+					</div>
+				</div>
+				<br />
+				<h2>Highlights: </h2>
+				<ul class="product-highlights">
+					{% for highlight in product.highlights %}
+						<li>{{highlight}}</li>
+					{% endfor %}
+				</ul>
+				<div class="product-specs">
+					<h2 class="product-spec-heading">Specifications</h2>
+					{% for spectype in product.specs %}
+					<section class="product-spec-section">
+						<h3 class="product-spectype-title">
+							{{spectype.title}}
+						</h3>
+
+						{% for specname, specvalue in spectype.values %}
+						<div class="product-spec">
+							<div class="specname">{{ specname }}</div>
+							<div class="specvalue">{{ specvalue }}</div>
+						</div>
+						{% endfor %}
+						
+					</section>
+					{% endfor %}
+				</div>
+			</div>
+		</main>
+		{% include "./components/footer.html" %}
+
+		<script defer>
+			let inCart = false
+			document.getElementById("add-to-cart")?.addEventListener("click", function() {
+				if (inCart) return
+				fetch("/addtocart", {
+					credentials:"include",
+					body: JSON.stringify({pid:this.dataset.pid}),
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}).then(res => res.json()).then(res => {
+					if(!res.loggedIn) {
+						alert("Please Login to add this product to cart!")
+						return
+					}
+					inCart = true
+					location.reload()
+				})
+			})
+			document.getElementById("buy-button")?.addEventListener("click", function() {
+				if (!inCart) {
+					fetch("/addtocart", {
+						credentials:"include",
+						body: JSON.stringify({pid:this.dataset.pid}),
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+					}).then(res => res.json()).then(res => {
+						if(!res.loggedIn) {
+							alert("Please Login to buy this product!")
+							return
+						}
+						inCart = true
+						location.pathname = "/cart"
+					})} else {
+						location.pathname = "/cart"
+					}
+				})
+		</script>
+	</body>
+</html>
