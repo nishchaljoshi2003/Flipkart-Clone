@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=1000px" />
+		<link rel="stylesheet" href="/static/style.css" />
+		<link rel="stylesheet" href="/static/header.css" />
+		<link rel="stylesheet" href="/static/icons.css" />
+		<link rel="stylesheet" href="/static/component/product.css" />
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💣</text></svg>">
+		<title>Boomkart</title>
+		<style>
+			body {
+				background-color: #eeeeee;
+			}
+			#main {
+				display: flex;
+				flex-direction: column;
+				flex-wrap: nowrap;
+				align-items: flex-start;
+				justify-content: flex-start;
+				max-width: 800px;
+				margin: 10px auto;
+				padding: 10px;
+			}
+			.category-title {
+				display: block;
+				width: 100%;
+				padding: 20px;
+				border-radius: 5px;
+				margin-bottom: 10px;
+				color: #fff;
+    			background: linear-gradient(45deg, red, #ff9898);
+			}
+			.view-category {
+				width: 100%;
+				padding: 10px;
+				font-size: 1.4em;
+				font-weight: 500;
+				color: white;
+				background-color: #4169e4;
+				border-radius: 5px;
+				text-decoration: none;
+				box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.3);
+				margin-bottom: 30px;
+				text-align: center;
+			}
+
+			#carousel {
+				width: 100%;
+				display: grid;
+				overflow: hidden;
+				margin: 10px 0 30px 0;
+				align-items: center;
+				justify-content: center;
+			}
+			#carousel a {
+				grid-row: 1;
+				grid-column: 1;
+				object-fit: cover;
+				height: 100%;
+				width: 100%;
+				transition: opacity 0.5s;
+				opacity: 0;
+				z-index: 2;
+			}
+			#carousel img {
+				object-fit: cover;
+				height: 100%;
+				width: 100%;
+			}
+			#carousel-prev,
+			#carousel-next {
+				width: 40px;
+				height: 40px;
+				border: none;
+				background-color: #fff;
+				color: #444;
+				box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.3);
+				border-radius: 50%;
+				position: absolute;
+				z-index: 4;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+			}
+			#carousel-prev {
+				left: 10px;
+			}
+			#carousel-next {
+				right: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		{% include "./components/header.html" %}
+		<div id="carousel">
+			<button id="carousel-prev">
+				<i class="material-icon">arrow_back</i>
+			</button>
+			{% for item in carousal %}
+			<a href="{{item.link}}">
+				<img src="{{item.img}}" />
+			</a>
+			{% endfor %}
+			<button id="carousel-next">
+				<i class="material-icon">arrow_forward</i>
+			</button>
+		</div>
+		<main id="main">
+			{% for section in sections %}
+				<h1 class="category-title">Buy {{section.category}} :</h1>
+				{% for product in section.products %}
+					{% include "./components/product.html" %}
+				{% endfor %}
+				<a href="/{{section.category}}" class="view-category">
+					View All {{section.category}} &gt;
+				</a>
+			{% endfor %}
+		</main>
+		{% include "./components/footer.html" %}
+
+		<script defer>
+			const carousel = document.getElementById("carousel");
+			let images = [...carousel.querySelectorAll("a")];
+			let duration = 6000;
+			let activeImageId = -1;
+			let tid;
+
+			function nextImage(clear = true) {
+				if (clear) {
+					clearTimeout(tid);
+				}
+				activeImageId++;
+				if (activeImageId >= images.length) activeImageId = 0;
+				images.forEach((img, i) => {
+					img.style.opacity = (i === activeImageId ? 1 : 0);
+					img.style.zIndex = (i === activeImageId ? 2 : 1);
+				});
+				tid = setTimeout(() => {
+					nextImage();
+				}, duration);
+			}
+			function prevImage(clear = true) {
+				if (clear) {
+					clearTimeout(tid);
+				}
+				activeImageId--;
+				if (activeImageId < 0) activeImageId = images.length - 1;
+				images.forEach((img, i) => {
+					img.style.opacity = (i === activeImageId ? 1 : 0);
+					img.style.zIndex = (i === activeImageId ? 2 : 1);
+				});
+				console.log("uouo");
+				tid = setTimeout(() => {
+					nextImage();
+				}, duration);
+			}
+
+			document
+				.getElementById("carousel-prev")
+				.addEventListener("click", prevImage);
+			document
+				.getElementById("carousel-next")
+				.addEventListener("click", nextImage);
+			nextImage(false);
+		</script>
+	</body>
+</html>
